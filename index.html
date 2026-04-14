@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Opus Estates | AI-Powered Real Estate in Costa Rica</title>
+    
+    <!-- Tailwind CSS & Icons -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    
+    <!-- Three.js for eDrawings 3D Simulation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <!-- React & Babel -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif'],
+                        serif: ['Cinzel', 'serif'],
+                    },
+                    colors: {
+                        opus: {
+                            dark: '#0a0f12',
+                            panel: '#111820',
+                            gold: '#d4af37',
+                            goldLight: '#f3e5ab',
+                            teal: '#0d9488',
+                            earth: '#27272a'
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.8s ease-out forwards',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { background-color: #0a0f12; color: #f8fafc; overflow-x: hidden; }
+        
+        .glass-panel {
+            background: rgba(17, 24, 32, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .gold-gradient-text {
+            background: linear-gradient(to right, #d4af37, #f3e5ab, #d4af37);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            animation: shine 3s linear infinite;
+        }
+
+        @keyframes shine { to { background-position: 200% center; } }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0a0f12; }
+        ::-webkit-scrollbar-thumb { background: #d4af37; border-radius: 3px; }
+
+        /* Blueprint Grid Background */
+        .blueprint-bg {
+            background-color: #1e3a8a;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-opus-gold selection:text-opus-dark">
+
+    <div id="root" class="min-h-screen flex flex-col"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+
+        // ==========================================
+        // 1. HERO COMPONENT
+        // ==========================================
+        const HeroSection = ({ onOpenStudio }) => (
+            <div className="relative w-full h-screen flex items-center justify-center overflow-hidden">
+                {/* Background Image */}
+                <div className="absolute inset-0 z-0">
+                    <img 
+                        src="https://images.unsplash.com/photo-1613490908578-79c23565610e?q=80&w=2000&auto=format&fit=crop" 
+                        alt="Costa Rica Luxury Villa" 
+                        className="w-full h-full object-cover opacity-60"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-b from-opus-dark/80 via-opus-dark/40 to-opus-dark"></div>
+                </div>
+
+                <div className="relative z-10 text-center px-6 max-w-5xl animate-fade-in">
+                    <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-opus-gold/30 bg-opus-gold/10 text-opus-goldLight text-xs font-bold uppercase tracking-[0.2em] mb-6">
+                        <span className="w-2 h-2 rounded-full bg-opus-gold animate-pulse"></span>
+                        Exclusively for US & EU Buyers
+                    </div>
+                    
+                    <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight text-white drop-shadow-2xl">
+                        Architects of Dreams in <br />
+                        <span className="gold-gradient-text">Costa Rica</span>
+                    </h1>
+                    
+                    <p className="text-lg md:text-xl text-gray-300 font-light mb-10 max-w-3xl mx-auto leading-relaxed">
+                        Design your tropical sanctuary before you even pack your bags. Use our Quantum AI Studio to customize your villa's architecture, interiors, and engineering from anywhere in the world.
+                    </p>
+
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+                        <button 
+                            onClick={onOpenStudio}
+                            className="px-8 py-4 bg-opus-gold text-opus-dark font-bold uppercase tracking-widest text-sm rounded-sm hover:bg-opus-goldLight transition duration-300 shadow-[0_0_20px_rgba(212,175,55,0.4)] flex items-center gap-3"
+                        >
+                            <i className="ph-fill ph-magic-wand text-xl"></i> Launch AI Studio
+                        </button>
+                        <a 
+                            href="#villas"
+                            className="px-8 py-4 border border-white/30 text-white font-bold uppercase tracking-widest text-sm rounded-sm hover:border-opus-gold hover:text-opus-gold transition duration-300"
+                        >
+                            View Portfolio
+                        </a>
+                    </div>
+                </div>
+            </div>
+        );
+
+        // ==========================================
+        // 2. AI STUDIO COMPONENT (The Core Magic)
+        // ==========================================
+        const AIStudio = () => {
+            const [activeApi, setActiveApi] = useState('myarchitect'); // myarchitect, edraw, edrawings
+            
+            // State for MyArchitectAI (Interior)
+            const [interiorStyle, setInteriorStyle] = useState('tropical');
+            const interiorImages = {
+                tropical: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=1000&auto=format&fit=crop",
+                modern: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=1000&auto=format&fit=crop",
+                minimalist: "https://images.unsplash.com/photo-1598928506311-c95148c8f4d2?q=80&w=1000&auto=format&fit=crop"
+            };
+
+            // State for Edraw.AI (MEP Plans)
+            const [layers, setLayers] = useState({ electrical: true, plumbing: false, hvac: false });
+
+            // Ref for Three.js eDrawings Canvas
+            const mountRef = useRef(null);
+
+            // Three.js Logic for eDrawings Simulation
+            useEffect(() => {
+                if (activeApi === 'edrawings' && mountRef.current) {
+                    const width = mountRef.current.clientWidth;
+                    const height = mountRef.current.clientHeight;
+
+                    const scene = new THREE.Scene();
+                    const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+                    camera.position.set(4, 3, 6);
+
+                    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+                    renderer.setSize(width, height);
+                    mountRef.current.innerHTML = ''; // Clear previous
+                    mountRef.current.appendChild(renderer.domElement);
+
+                    // Create a stylized wireframe house
+                    const houseGroup = new THREE.Group();
+
+                    // Base
+                    const boxGeo = new THREE.BoxGeometry(3, 2, 4);
+                    const edges = new THREE.EdgesGeometry(boxGeo);
+                    const lineMat = new THREE.LineBasicMaterial({ color: 0xd4af37, linewidth: 2 });
+                    const boxLines = new THREE.LineSegments(edges, lineMat);
+                    boxLines.position.y = 1;
+                    houseGroup.add(boxLines);
+
+                    // Roof
+                    const roofGeo = new THREE.ConeGeometry(2.5, 1.5, 4);
+                    const roofEdges = new THREE.EdgesGeometry(roofGeo);
+                    const roofLines = new THREE.LineSegments(roofEdges, lineMat);
+                    roofLines.position.y = 2.75;
+                    roofLines.rotation.y = Math.PI / 4;
+                    houseGroup.add(roofLines);
+
+                    scene.add(houseGroup);
+
+                    const animate = function () {
+                        requestAnimationFrame(animate);
+                        houseGroup.rotation.y += 0.005;
+                        renderer.render(scene, camera);
+                    };
+
+                    animate();
+
+                    // Handle Resize
+                    const handleResize = () => {
+                        if(mountRef.current) {
+                            camera.aspect = mountRef.current.clientWidth / mountRef.current.clientHeight;
+                            camera.updateProjectionMatrix();
+                            renderer.setSize(mountRef.current.clientWidth, mountRef.current.clientHeight);
+                        }
+                    };
+                    window.addEventListener('resize', handleResize);
+
+                    return () => {
+                        window.removeEventListener('resize', handleResize);
+                        if(mountRef.current) mountRef.current.innerHTML = '';
+                    };
+                }
+            }, [activeApi]);
+
+            return (
+                <section id="ai-studio" className="py-24 bg-opus-panel border-y border-white/5 relative z-20">
+                    <div className="max-w-7xl mx-auto px-6">
+                        <div className="text-center mb-16">
+                            <h2 className="font-serif text-4xl text-opus-gold mb-4">Quantum AI Design Studio</h2>
+                            <p className="text-gray-400 max-w-2xl mx-auto">
+                                Customize your Costa Rican villa in real-time. Our integrated AI engines allow you to modify interior design, review engineering plans, and explore 3D spatial models.
+                            </p>
+                        </div>
+
+                        <div className="flex flex-col lg:flex-row gap-8 h-auto lg:h-[600px]">
+                            
+                            {/* SIDEBAR CONTROLS */}
+                            <div className="w-full lg:w-1/3 flex flex-col gap-4">
+                                {/* API 1: MyArchitectAI */}
+                                <button 
+                                    onClick={() => setActiveApi('myarchitect')}
+                                    className={`p-6 text-left border rounded-lg transition duration-300 ${activeApi === 'myarchitect' ? 'bg-opus-gold/10 border-opus-gold shadow-[0_0_15px_rgba(212,175,55,0.2)]' : 'bg-opus-dark border-white/10 hover:border-opus-gold/50'}`}
+                                >
+                                    <div className="flex items-center gap-3 mb-2">
+                                        <i className="ph-fill ph-armchair text-2xl text-opus-gold"></i>
+                                        <h3 className="font-bold text-white uppercase tracking-wider text-sm">MyArchitectAI API</h3>
+                                    </div>
+                                    <p className="text-xs text-gray-400">Real-time interior design & furniture generation based on Costa Rican aesthetics.</p>
+                                </button>
+
+                                {/* API 2: Edraw.AI */}
+                                <button 
+                                    onClick={() => setActiveApi('edraw')}
+                                    className={`p-6 text-left border rounded-lg transition duration-300 ${activeApi === 'edraw' ? 'bg-opus-gold/10 border-opus-gold shadow-[0_0_15px_rgba(212,175,55,0.2)]' : 'bg-opus-dark border-white/10 hover:border-opus-gold/50'}`}
+                                >
+                                    <div className="flex items-center gap-3 mb-2">
+                                        <i className="ph-fill ph-blueprint text-2xl text-opus-gold"></i>
+                                        <h3 className="font-bold text-white uppercase tracking-wider text-sm">Edraw.AI Engine</h3>
+                                    </div>
+                                    <p className="text-xs text-gray-400">Live generation of MEP (Mechanical, Electrical, Plumbing) floor plans.</p>
+                                </button>
+
+                                {/* API 3: eDrawings */}
+                                <button 
+                                    onClick={() => setActiveApi('edrawings')}
+                                    className={`p-6 text-left border rounded-lg transition duration-300 ${activeApi === 'edrawings' ? 'bg-opus-gold/10 border-opus-gold shadow-[0_0_15px_rgba(212,175,55,0.2)]' : 'bg-opus-dark border-white/10 hover:border-opus-gold/50'}`}
+                                >
+                                    <div className="flex items-center gap-3 mb-2">
+                                        <i className="ph-fill ph-cube text-2xl text-opus-gold"></i>
+                                        <h3 className="font-bold text-white uppercase tracking-wider text-sm">eDrawings 3D Viewer</h3>
+                                    </div>
+                                    <p className="text-xs text-gray-400">Interactive WebGL spatial rendering of the architectural structure.</p>
+                                </button>
+                            </div>
+
+                            {/* MAIN VISUALIZATION AREA */}
+                            <div className="w-full lg:w-2/3 bg-black rounded-lg border border-white/10 overflow-hidden relative min-h-[400px] lg:min-h-0">
+                                
+                                {/* VIEW 1: MyArchitectAI */}
+                                {activeApi === 'myarchitect' && (
+                                    <div className="absolute inset-0 flex flex-col">
+                                        <div className="absolute top-4 left-4 z-10 flex gap-2">
+                                            {['tropical', 'modern', 'minimalist'].map(style => (
+                                                <button 
+                                                    key={style}
+                                                    onClick={() => setInteriorStyle(style)}
+                                                    className={`px-4 py-2 text-xs font-bold uppercase tracking-wider rounded backdrop-blur-md transition ${interiorStyle === style ? 'bg-opus-gold text-black' : 'bg-black/50 text-white border border-white/20 hover:bg-white/20'}`}
+                                                >
+                                                    {style}
+                                                </button>
+                                            ))}
+                                        </div>
+                                        <img 
+                                            key={interiorStyle}
+                                            src={interiorImages[interiorStyle]} 
+                                            alt="AI Generated Interior" 
+                                            className="w-full h-full object-cover animate-fade-in"
+                                        />
+                                        <div className="absolute bottom-4 right-4 bg-black/60 backdrop-blur px-3 py-1 rounded text-[10px] text-opus-gold font-mono border border-opus-gold/30">
+                                            Rendering Engine: MyArchitectAI v4.2
+                                        </div>
+                                    </div>
+                                )}
+
+                                {/* VIEW 2: Edraw.AI */}
+                                {activeApi === 'edraw' && (
+                                    <div className="absolute inset-0 blueprint-bg p-6 flex flex-col">
+                                        <div className="flex justify-center gap-4 mb-6 z-10">
+                                            {['electrical', 'plumbing', 'hvac'].map(layer => (
+                                                <label key={layer} className="flex items-center gap-2 text-xs font-mono text-white cursor-pointer bg-black/50 px-3 py-2 rounded border border-white/20">
+                                                    <input 
+                                                        type="checkbox" 
+                                                        checked={layers[layer]} 
+                                                        onChange={() => setLayers({...layers, [layer]: !layers[layer]})}
+                                                        className="accent-opus-gold"
+                                                    />
+                                                    {layer.toUpperCase()}
+                                                </label>
+                                            ))}
+                                        </div>
+                                        <div className="flex-1 relative border-2 border-blue-400/30 rounded bg-blue-900/20 overflow-hidden flex items-center justify-center">
+                                            {/* Fake Blueprint Lines */}
+                                            <div className="absolute inset-4 border-2 border-white/20"></div>
+                                            <div className="absolute top-1/2 left-4 right-4 h-0.5 bg-white/20"></div>
+                                            <div className="absolute left-1/2 top-4 bottom-4 w-0.5 bg-white/20"></div>
+                                            
+                                            {layers.electrical && (
+                                                <svg className="absolute inset-0 w-full h-full animate-fade-in" style={{color: '#fbbf24'}}>
+                                                    <path d="M 100 100 L 200 100 L 200 200 L 300 200" stroke="currentColor" strokeWidth="2" fill="none" strokeDasharray="5,5"/>
+                                                    <circle cx="100" cy="100" r="4" fill="currentColor" />
+                                                    <circle cx="300" cy="200" r="4" fill="currentColor" />
+                                                </svg>
+                                            )}
+                                            {layers.plumbing && (
+                                                <svg className="absolute inset-0 w-full h-full animate-fade-in" style={{color: '#38bdf8'}}>
+                                                    <path d="M 50 150 L 150 150 L 150 250 L 250 250" stroke="currentColor" strokeWidth="2" fill="none"/>
+                                                    <rect x="46" y="146" width="8" height="8" fill="currentColor" />
+                                                    <rect x="246" y="246" width="8" height="8" fill="currentColor" />
+                                                </svg>
+                                            )}
+                                            {layers.hvac && (
+                                                <svg className="absolute inset-0 w-full h-full animate-fade-in" style={{color: '#fb7185'}}>
+                                                    <path d="M 200 50 L 200 150 L 400 150" stroke="currentColor" strokeWidth="4" fill="none" opacity="0.5"/>
+                                                </svg>
+                                            )}
+                                            <div className="absolute bottom-2 right-2 text-[10px] text-blue-300 font-mono">Powered by Edraw.AI API</div>
+                                        </div>
+                                    </div>
+                                )}
+
+                                {/* VIEW 3: eDrawings 3D */}
+                                {activeApi === 'edrawings' && (
+                                    <div className="absolute inset-0 flex flex-col bg-gradient-to-b from-gray-900 to-black">
+                                        <div className="absolute top-4 left-4 z-10 text-xs font-mono text-opus-gold tracking-widest animate-pulse">
+                                            Interactive WebGL Render
+                                        </div>
+                                        <div className="absolute top-4 right-4 z-10 flex gap-2">
+                                            <div className="w-8 h-8 rounded bg-white/10 flex items-center justify-center border border-white/20"><i className="ph ph-arrows-out-cardinal text-white"></i></div>
+                                            <div className="w-8 h-8 rounded bg-white/10 flex items-center justify-center border border-white/20"><i className="ph ph-arrows-clockwise text-white"></i></div>
+                                        </div>
+                                        {/* Three.js Container */}
+                                        <div ref={mountRef} className="w-full h-full cursor-move"></div>
+                                        
+                                        <div className="absolute bottom-4 right-4 bg-black/60 backdrop-blur px-3 py-1 rounded text-[10px] text-gray-400 font-mono border border-gray-700">
+                                            eDrawings Cloud API Connected
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
+        // ==========================================
+        // 3. PORTFOLIO COMPONENT
+        // ==========================================
+        const Portfolio = () => {
+            const villas = [
+                { name: "Villa Guanacaste", location: "Papagayo Peninsula", price: "Starts at $1.2M", img: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=800" },
+                { name: "Casa Cielo", location: "Santa Teresa", price: "Starts at $2.5M", img: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=800" },
+                { name: "Jungle Sanctuary", location: "Uvita", price: "Starts at $850K", img: "https://images.unsplash.com/photo-1510798831971-661eb04b3739?q=80&w=800" }
+            ];
+
+            return (
+                <section id="villas" className="py-24 bg-opus-dark relative z-20">
+                    <div className="max-w-7xl mx-auto px-6">
+                        <div className="flex flex-col md:flex-row justify-between items-end mb-12 border-b border-white/10 pb-6">
+                            <div>
+                                <h2 className="font-serif text-3xl md:text-5xl text-white mb-2">Featured Developments</h2>
+                                <p className="text-opus-gold uppercase tracking-widest text-xs font-bold">Costa Rica Premium Locations</p>
+                            </div>
+                            <button className="hidden md:flex items-center gap-2 text-sm text-gray-400 hover:text-white transition mt-4 md:mt-0">
+                                View All Properties <i className="ph ph-arrow-right"></i>
+                            </button>
+                        </div>
+
+                        <div className="grid md:grid-cols-3 gap-8">
+                            {villas.map((villa, i) => (
+                                <div key={i} className="group cursor-pointer">
+                                    <div className="overflow-hidden rounded-sm relative aspect-[4/5] mb-4">
+                                        <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition z-10 duration-500"></div>
+                                        <img src={villa.img} alt={villa.name} className="w-full h-full object-cover transform group-hover:scale-110 transition duration-700" />
+                                        <div className="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black to-transparent z-20">
+                                            <h3 className="font-serif text-2xl text-white mb-1">{villa.name}</h3>
+                                            <p className="text-xs text-gray-300 uppercase tracking-widest"><i className="ph-fill ph-map-pin text-opus-gold"></i> {villa.location}</p>
+                                        </div>
+                                    </div>
+                                    <div className="flex justify-between items-center px-1">
+                                        <span className="text-sm font-bold text-opus-gold">{villa.price}</span>
+                                        <span className="text-xs text-gray-500 uppercase tracking-widest group-hover:text-white transition">Customize <i className="ph-bold ph-arrow-right"></i></span>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
+        // ==========================================
+        // MAIN APP ASSEMBLE
+        // ==========================================
+        const App = () => {
+            const scrollToStudio = () => {
+                const studio = document.getElementById('ai-studio');
+                if(studio) studio.scrollIntoView({ behavior: 'smooth' });
+            };
+
+            return (
+                <div className="flex flex-col min-h-screen font-sans">
+                    
+                    {/* TOP NAVIGATION */}
+                    <nav className="fixed w-full z-50 bg-opus-dark/90 backdrop-blur-md border-b border-white/5 transition-all">
+                        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+                            <a href="#" className="flex items-center gap-3">
+                                <div className="w-10 h-10 border border-opus-gold flex items-center justify-center rounded-sm">
+                                    <i className="ph-thin ph-buildings text-2xl text-opus-gold"></i>
+                                </div>
+                                <div className="flex flex-col">
+                                    <span className="font-serif font-bold text-xl tracking-widest text-white leading-none">OPUS</span>
+                                    <span className="text-[9px] text-gray-400 uppercase tracking-[0.3em]">Estates Costa Rica</span>
+                                </div>
+                            </a>
+
+                            <div className="hidden md:flex gap-8 text-xs font-bold uppercase tracking-[0.15em] text-gray-300">
+                                <a href="#" className="hover:text-opus-gold transition">Home</a>
+                                <a href="#ai-studio" className="hover:text-opus-gold transition">Quantum AI Studio</a>
+                                <a href="#villas" className="hover:text-opus-gold transition">Properties</a>
+                            </div>
+
+                            <a href="mailto:contact@opusestates.cr" className="hidden md:block px-6 py-2 border border-opus-gold text-opus-gold text-xs font-bold uppercase tracking-widest hover:bg-opus-gold hover:text-black transition duration-300">
+                                Client Portal
+                            </a>
+                            
+                            <button className="md:hidden text-white text-2xl"><i className="ph ph-list"></i></button>
+                        </div>
+                    </nav>
+
+                    <main className="flex-1">
+                        <HeroSection onOpenStudio={scrollToStudio} />
+                        <AIStudio />
+                        <Portfolio />
+                    </main>
+
+                    {/* FOOTER */}
+                    <footer className="bg-black py-12 border-t border-white/10 relative z-20">
+                        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+                            <div className="flex items-center gap-3 opacity-50">
+                                <i className="ph-thin ph-buildings text-2xl text-white"></i>
+                                <span className="font-serif text-lg tracking-widest text-white">OPUS ESTATES</span>
+                            </div>
+                            <p className="text-xs text-gray-600 font-mono text-center md:text-left">
+                                DESIGNED BY QUANTUM MAXIMUS & APOLLO SOL INVICTUS.<br/>
+                                API INTEGRATIONS: EDRAWINGS | EDRAW.AI | MYARCHITECTAI
+                            </p>
+                            <div className="flex gap-4 text-gray-500">
+                                <i className="ph-fill ph-instagram-logo text-xl hover:text-white cursor-pointer transition"></i>
+                                <i className="ph-fill ph-linkedin-logo text-xl hover:text-white cursor-pointer transition"></i>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
