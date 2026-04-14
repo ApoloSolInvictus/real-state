@@ -2,8 +2,8 @@
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Opus Estates | AI-Powered Real Estate in Costa Rica</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Opus Estates | AI-Powered Real Estate</title>
     
     <!-- Tailwind CSS & Icons -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -30,21 +30,20 @@
                     },
                     colors: {
                         opus: {
-                            dark: '#0a0f12',
-                            panel: '#111820',
+                            dark: '#050a0f',
+                            panel: '#0d141e',
                             gold: '#d4af37',
                             goldLight: '#f3e5ab',
                             teal: '#0d9488',
-                            earth: '#27272a'
                         }
                     },
                     animation: {
-                        'fade-in': 'fadeIn 0.8s ease-out forwards',
-                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'fade-in': 'fadeIn 0.6s ease-out forwards',
+                        'spin-slow': 'spin 3s linear infinite',
                     },
                     keyframes: {
                         fadeIn: {
-                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '0%': { opacity: '0', transform: 'translateY(10px)' },
                             '100%': { opacity: '1', transform: 'translateY(0)' },
                         }
                     }
@@ -54,13 +53,14 @@
     </script>
 
     <style>
-        body { background-color: #0a0f12; color: #f8fafc; overflow-x: hidden; }
+        body { background-color: #050a0f; color: #f8fafc; overflow-x: hidden; }
         
         .glass-panel {
-            background: rgba(17, 24, 32, 0.7);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(212, 175, 55, 0.2);
+            background: rgba(13, 20, 30, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
 
         .gold-gradient-text {
@@ -68,23 +68,26 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-size: 200% auto;
-            animation: shine 3s linear infinite;
+            animation: shine 4s linear infinite;
         }
-
         @keyframes shine { to { background-position: 200% center; } }
 
         /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #0a0f12; }
+        ::-webkit-scrollbar-track { background: #050a0f; }
         ::-webkit-scrollbar-thumb { background: #d4af37; border-radius: 3px; }
 
         /* Blueprint Grid Background */
         .blueprint-bg {
-            background-color: #1e3a8a;
-            background-image: linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+            background-color: #0f172a;
+            background-image: linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px);
             background-size: 20px 20px;
         }
+
+        /* Hide scrollbar for tabs */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
 <body class="antialiased selection:bg-opus-gold selection:text-opus-dark">
@@ -98,42 +101,42 @@
         // 1. HERO COMPONENT
         // ==========================================
         const HeroSection = ({ onOpenStudio }) => (
-            <div className="relative w-full h-screen flex items-center justify-center overflow-hidden">
+            <div className="relative w-full min-h-[100svh] flex items-center justify-center overflow-hidden pt-20">
                 {/* Background Image */}
                 <div className="absolute inset-0 z-0">
                     <img 
                         src="https://images.unsplash.com/photo-1613490908578-79c23565610e?q=80&w=2000&auto=format&fit=crop" 
                         alt="Costa Rica Luxury Villa" 
-                        className="w-full h-full object-cover opacity-60"
+                        className="w-full h-full object-cover opacity-50 object-center"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-b from-opus-dark/80 via-opus-dark/40 to-opus-dark"></div>
+                    <div className="absolute inset-0 bg-gradient-to-b from-opus-dark/90 via-opus-dark/60 to-opus-dark"></div>
                 </div>
 
-                <div className="relative z-10 text-center px-6 max-w-5xl animate-fade-in">
-                    <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-opus-gold/30 bg-opus-gold/10 text-opus-goldLight text-xs font-bold uppercase tracking-[0.2em] mb-6">
-                        <span className="w-2 h-2 rounded-full bg-opus-gold animate-pulse"></span>
+                <div className="relative z-10 text-center px-4 sm:px-6 max-w-5xl animate-fade-in w-full">
+                    <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-opus-gold/30 bg-opus-gold/10 text-opus-goldLight text-[10px] sm:text-xs font-bold uppercase tracking-[0.2em] mb-6">
+                        <span className="w-1.5 h-1.5 rounded-full bg-opus-gold animate-pulse"></span>
                         Exclusively for US & EU Buyers
                     </div>
                     
-                    <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight text-white drop-shadow-2xl">
+                    <h1 className="font-serif text-4xl sm:text-5xl md:text-7xl font-bold mb-6 leading-tight text-white drop-shadow-2xl">
                         Architects of Dreams in <br />
                         <span className="gold-gradient-text">Costa Rica</span>
                     </h1>
                     
-                    <p className="text-lg md:text-xl text-gray-300 font-light mb-10 max-w-3xl mx-auto leading-relaxed">
-                        Design your tropical sanctuary before you even pack your bags. Use our Quantum AI Studio to customize your villa's architecture, interiors, and engineering from anywhere in the world.
+                    <p className="text-base sm:text-lg text-gray-300 font-light mb-8 sm:mb-10 max-w-2xl mx-auto leading-relaxed px-2">
+                        Design your tropical sanctuary before you pack your bags. Use our Quantum AI Studio to customize your villa's interiors, review MEP engineering, and explore 3D models live.
                     </p>
 
-                    <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                         <button 
                             onClick={onOpenStudio}
-                            className="px-8 py-4 bg-opus-gold text-opus-dark font-bold uppercase tracking-widest text-sm rounded-sm hover:bg-opus-goldLight transition duration-300 shadow-[0_0_20px_rgba(212,175,55,0.4)] flex items-center gap-3"
+                            className="w-full sm:w-auto px-8 py-4 bg-opus-gold text-opus-dark font-bold uppercase tracking-widest text-sm hover:bg-opus-goldLight transition duration-300 shadow-[0_0_20px_rgba(212,175,55,0.4)] flex items-center justify-center gap-3"
                         >
                             <i className="ph-fill ph-magic-wand text-xl"></i> Launch AI Studio
                         </button>
                         <a 
-                            href="#villas"
-                            className="px-8 py-4 border border-white/30 text-white font-bold uppercase tracking-widest text-sm rounded-sm hover:border-opus-gold hover:text-opus-gold transition duration-300"
+                            href="#portfolio"
+                            className="w-full sm:w-auto px-8 py-4 border border-white/30 text-white font-bold uppercase tracking-widest text-sm hover:border-opus-gold hover:text-opus-gold transition duration-300 flex items-center justify-center"
                         >
                             View Portfolio
                         </a>
@@ -143,10 +146,11 @@
         );
 
         // ==========================================
-        // 2. AI STUDIO COMPONENT (The Core Magic)
+        // 2. AI STUDIO COMPONENT (The Interactive Core)
         // ==========================================
         const AIStudio = () => {
             const [activeApi, setActiveApi] = useState('myarchitect'); // myarchitect, edraw, edrawings
+            const [isProcessing, setIsProcessing] = useState(false);
             
             // State for MyArchitectAI (Interior)
             const [interiorStyle, setInteriorStyle] = useState('tropical');
@@ -161,209 +165,258 @@
 
             // Ref for Three.js eDrawings Canvas
             const mountRef = useRef(null);
+            const rendererRef = useRef(null);
+            const sceneRef = useRef(null);
+            const cameraRef = useRef(null);
 
-            // Three.js Logic for eDrawings Simulation
+            // Simulation of API Delay
+            const handleStyleChange = (style) => {
+                if (style === interiorStyle) return;
+                setIsProcessing(true);
+                setTimeout(() => {
+                    setInteriorStyle(style);
+                    setIsProcessing(false);
+                }, 1200); // 1.2s delay to simulate API rendering
+            };
+
+            // Three.js Logic for eDrawings Simulation (Highly Responsive)
             useEffect(() => {
                 if (activeApi === 'edrawings' && mountRef.current) {
                     const width = mountRef.current.clientWidth;
                     const height = mountRef.current.clientHeight;
 
                     const scene = new THREE.Scene();
+                    sceneRef.current = scene;
+
                     const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
-                    camera.position.set(4, 3, 6);
+                    camera.position.set(5, 4, 8);
+                    camera.lookAt(0, 1, 0);
+                    cameraRef.current = camera;
 
                     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
                     renderer.setSize(width, height);
-                    mountRef.current.innerHTML = ''; // Clear previous
+                    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+                    mountRef.current.innerHTML = ''; 
                     mountRef.current.appendChild(renderer.domElement);
+                    rendererRef.current = renderer;
 
-                    // Create a stylized wireframe house
+                    // Architecture Model
                     const houseGroup = new THREE.Group();
 
-                    // Base
-                    const boxGeo = new THREE.BoxGeometry(3, 2, 4);
-                    const edges = new THREE.EdgesGeometry(boxGeo);
-                    const lineMat = new THREE.LineBasicMaterial({ color: 0xd4af37, linewidth: 2 });
-                    const boxLines = new THREE.LineSegments(edges, lineMat);
-                    boxLines.position.y = 1;
-                    houseGroup.add(boxLines);
+                    // Materials
+                    const lineMat = new THREE.LineBasicMaterial({ color: 0xd4af37, linewidth: 2, transparent: true, opacity: 0.8 });
+                    const solidMat = new THREE.MeshBasicMaterial({ color: 0x111820, transparent: true, opacity: 0.6 });
 
-                    // Roof
-                    const roofGeo = new THREE.ConeGeometry(2.5, 1.5, 4);
+                    // Base structure
+                    const boxGeo = new THREE.BoxGeometry(4, 2.5, 5);
+                    const edges = new THREE.EdgesGeometry(boxGeo);
+                    const boxLines = new THREE.LineSegments(edges, lineMat);
+                    const boxSolid = new THREE.Mesh(boxGeo, solidMat);
+                    boxLines.position.y = 1.25;
+                    boxSolid.position.y = 1.25;
+                    houseGroup.add(boxLines);
+                    houseGroup.add(boxSolid);
+
+                    // Modern Flat Roof
+                    const roofGeo = new THREE.BoxGeometry(4.5, 0.2, 5.5);
                     const roofEdges = new THREE.EdgesGeometry(roofGeo);
                     const roofLines = new THREE.LineSegments(roofEdges, lineMat);
-                    roofLines.position.y = 2.75;
-                    roofLines.rotation.y = Math.PI / 4;
+                    const roofSolid = new THREE.Mesh(roofGeo, solidMat);
+                    roofLines.position.y = 2.6;
+                    roofSolid.position.y = 2.6;
                     houseGroup.add(roofLines);
+                    houseGroup.add(roofSolid);
 
                     scene.add(houseGroup);
 
+                    let animationId;
                     const animate = function () {
-                        requestAnimationFrame(animate);
-                        houseGroup.rotation.y += 0.005;
+                        animationId = requestAnimationFrame(animate);
+                        houseGroup.rotation.y += 0.005; // Slow rotation
                         renderer.render(scene, camera);
                     };
-
                     animate();
 
-                    // Handle Resize
-                    const handleResize = () => {
-                        if(mountRef.current) {
-                            camera.aspect = mountRef.current.clientWidth / mountRef.current.clientHeight;
-                            camera.updateProjectionMatrix();
-                            renderer.setSize(mountRef.current.clientWidth, mountRef.current.clientHeight);
+                    // Responsive Resize Observer
+                    const resizeObserver = new ResizeObserver(entries => {
+                        for (let entry of entries) {
+                            const newW = entry.contentRect.width;
+                            const newH = entry.contentRect.height;
+                            if(cameraRef.current && rendererRef.current) {
+                                cameraRef.current.aspect = newW / newH;
+                                cameraRef.current.updateProjectionMatrix();
+                                rendererRef.current.setSize(newW, newH);
+                            }
                         }
-                    };
-                    window.addEventListener('resize', handleResize);
+                    });
+                    resizeObserver.observe(mountRef.current);
 
                     return () => {
-                        window.removeEventListener('resize', handleResize);
+                        cancelAnimationFrame(animationId);
+                        resizeObserver.disconnect();
                         if(mountRef.current) mountRef.current.innerHTML = '';
                     };
                 }
             }, [activeApi]);
 
             return (
-                <section id="ai-studio" className="py-24 bg-opus-panel border-y border-white/5 relative z-20">
-                    <div className="max-w-7xl mx-auto px-6">
-                        <div className="text-center mb-16">
-                            <h2 className="font-serif text-4xl text-opus-gold mb-4">Quantum AI Design Studio</h2>
-                            <p className="text-gray-400 max-w-2xl mx-auto">
-                                Customize your Costa Rican villa in real-time. Our integrated AI engines allow you to modify interior design, review engineering plans, and explore 3D spatial models.
+                <section id="ai-studio" className="py-20 bg-opus-panel relative z-20">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 w-full">
+                        <div className="text-center mb-10 md:mb-16">
+                            <h2 className="font-serif text-3xl md:text-4xl text-opus-gold mb-4">Quantum AI Design Studio</h2>
+                            <p className="text-gray-400 text-sm md:text-base max-w-2xl mx-auto px-2">
+                                Interact with our live API simulators. Modify interior styles, inspect engineering blueprints, and view the 3D spatial structure of your future home.
                             </p>
                         </div>
 
-                        <div className="flex flex-col lg:flex-row gap-8 h-auto lg:h-[600px]">
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
                             
-                            {/* SIDEBAR CONTROLS */}
-                            <div className="w-full lg:w-1/3 flex flex-col gap-4">
-                                {/* API 1: MyArchitectAI */}
+                            {/* SIDEBAR CONTROLS (Top on Mobile, Left on Desktop) */}
+                            <div className="lg:col-span-4 flex flex-row lg:flex-col gap-3 overflow-x-auto lg:overflow-x-visible no-scrollbar pb-2 lg:pb-0">
+                                {/* API 1 */}
                                 <button 
                                     onClick={() => setActiveApi('myarchitect')}
-                                    className={`p-6 text-left border rounded-lg transition duration-300 ${activeApi === 'myarchitect' ? 'bg-opus-gold/10 border-opus-gold shadow-[0_0_15px_rgba(212,175,55,0.2)]' : 'bg-opus-dark border-white/10 hover:border-opus-gold/50'}`}
+                                    className={`flex-shrink-0 w-64 lg:w-full p-5 text-left border rounded-xl transition duration-300 ${activeApi === 'myarchitect' ? 'bg-opus-gold/10 border-opus-gold shadow-[0_0_15px_rgba(212,175,55,0.2)]' : 'bg-opus-dark border-white/10 hover:border-opus-gold/50'}`}
                                 >
                                     <div className="flex items-center gap-3 mb-2">
                                         <i className="ph-fill ph-armchair text-2xl text-opus-gold"></i>
-                                        <h3 className="font-bold text-white uppercase tracking-wider text-sm">MyArchitectAI API</h3>
+                                        <h3 className="font-bold text-white uppercase tracking-wider text-xs md:text-sm">MyArchitectAI</h3>
                                     </div>
-                                    <p className="text-xs text-gray-400">Real-time interior design & furniture generation based on Costa Rican aesthetics.</p>
+                                    <p className="text-[11px] md:text-xs text-gray-400 leading-relaxed">Real-time interior design & furniture generation.</p>
                                 </button>
 
-                                {/* API 2: Edraw.AI */}
+                                {/* API 2 */}
                                 <button 
                                     onClick={() => setActiveApi('edraw')}
-                                    className={`p-6 text-left border rounded-lg transition duration-300 ${activeApi === 'edraw' ? 'bg-opus-gold/10 border-opus-gold shadow-[0_0_15px_rgba(212,175,55,0.2)]' : 'bg-opus-dark border-white/10 hover:border-opus-gold/50'}`}
+                                    className={`flex-shrink-0 w-64 lg:w-full p-5 text-left border rounded-xl transition duration-300 ${activeApi === 'edraw' ? 'bg-opus-gold/10 border-opus-gold shadow-[0_0_15px_rgba(212,175,55,0.2)]' : 'bg-opus-dark border-white/10 hover:border-opus-gold/50'}`}
                                 >
                                     <div className="flex items-center gap-3 mb-2">
                                         <i className="ph-fill ph-blueprint text-2xl text-opus-gold"></i>
-                                        <h3 className="font-bold text-white uppercase tracking-wider text-sm">Edraw.AI Engine</h3>
+                                        <h3 className="font-bold text-white uppercase tracking-wider text-xs md:text-sm">Edraw.AI Engine</h3>
                                     </div>
-                                    <p className="text-xs text-gray-400">Live generation of MEP (Mechanical, Electrical, Plumbing) floor plans.</p>
+                                    <p className="text-[11px] md:text-xs text-gray-400 leading-relaxed">Live generation of MEP floor plans.</p>
                                 </button>
 
-                                {/* API 3: eDrawings */}
+                                {/* API 3 */}
                                 <button 
                                     onClick={() => setActiveApi('edrawings')}
-                                    className={`p-6 text-left border rounded-lg transition duration-300 ${activeApi === 'edrawings' ? 'bg-opus-gold/10 border-opus-gold shadow-[0_0_15px_rgba(212,175,55,0.2)]' : 'bg-opus-dark border-white/10 hover:border-opus-gold/50'}`}
+                                    className={`flex-shrink-0 w-64 lg:w-full p-5 text-left border rounded-xl transition duration-300 ${activeApi === 'edrawings' ? 'bg-opus-gold/10 border-opus-gold shadow-[0_0_15px_rgba(212,175,55,0.2)]' : 'bg-opus-dark border-white/10 hover:border-opus-gold/50'}`}
                                 >
                                     <div className="flex items-center gap-3 mb-2">
                                         <i className="ph-fill ph-cube text-2xl text-opus-gold"></i>
-                                        <h3 className="font-bold text-white uppercase tracking-wider text-sm">eDrawings 3D Viewer</h3>
+                                        <h3 className="font-bold text-white uppercase tracking-wider text-xs md:text-sm">eDrawings 3D</h3>
                                     </div>
-                                    <p className="text-xs text-gray-400">Interactive WebGL spatial rendering of the architectural structure.</p>
+                                    <p className="text-[11px] md:text-xs text-gray-400 leading-relaxed">Interactive WebGL spatial rendering.</p>
                                 </button>
                             </div>
 
                             {/* MAIN VISUALIZATION AREA */}
-                            <div className="w-full lg:w-2/3 bg-black rounded-lg border border-white/10 overflow-hidden relative min-h-[400px] lg:min-h-0">
+                            <div className="lg:col-span-8 bg-black rounded-xl border border-white/10 overflow-hidden relative min-h-[400px] sm:min-h-[500px] lg:min-h-[600px] shadow-2xl">
                                 
                                 {/* VIEW 1: MyArchitectAI */}
                                 {activeApi === 'myarchitect' && (
                                     <div className="absolute inset-0 flex flex-col">
-                                        <div className="absolute top-4 left-4 z-10 flex gap-2">
+                                        <div className="absolute top-4 left-0 w-full px-4 z-20 flex flex-wrap justify-center sm:justify-start gap-2">
                                             {['tropical', 'modern', 'minimalist'].map(style => (
                                                 <button 
                                                     key={style}
-                                                    onClick={() => setInteriorStyle(style)}
-                                                    className={`px-4 py-2 text-xs font-bold uppercase tracking-wider rounded backdrop-blur-md transition ${interiorStyle === style ? 'bg-opus-gold text-black' : 'bg-black/50 text-white border border-white/20 hover:bg-white/20'}`}
+                                                    onClick={() => handleStyleChange(style)}
+                                                    disabled={isProcessing}
+                                                    className={`px-3 py-1.5 text-[10px] sm:text-xs font-bold uppercase tracking-wider rounded backdrop-blur-md transition border ${interiorStyle === style ? 'bg-opus-gold text-black border-opus-gold' : 'bg-black/60 text-white border-white/20 hover:bg-white/20'} disabled:opacity-50`}
                                                 >
                                                     {style}
                                                 </button>
                                             ))}
                                         </div>
+                                        
+                                        {/* Loading Overlay */}
+                                        {isProcessing && (
+                                            <div className="absolute inset-0 bg-black/80 z-10 flex flex-col items-center justify-center animate-fade-in">
+                                                <i className="ph ph-circle-notch animate-spin text-4xl text-opus-gold mb-3"></i>
+                                                <span className="text-xs font-mono text-opus-gold tracking-widest uppercase">Rendering via API...</span>
+                                            </div>
+                                        )}
+
                                         <img 
                                             key={interiorStyle}
                                             src={interiorImages[interiorStyle]} 
                                             alt="AI Generated Interior" 
                                             className="w-full h-full object-cover animate-fade-in"
                                         />
-                                        <div className="absolute bottom-4 right-4 bg-black/60 backdrop-blur px-3 py-1 rounded text-[10px] text-opus-gold font-mono border border-opus-gold/30">
-                                            Rendering Engine: MyArchitectAI v4.2
+                                        <div className="absolute bottom-4 right-4 bg-black/70 backdrop-blur px-3 py-1.5 rounded text-[9px] sm:text-[10px] text-opus-gold font-mono border border-opus-gold/30">
+                                            Status: MyArchitectAI Live
                                         </div>
                                     </div>
                                 )}
 
                                 {/* VIEW 2: Edraw.AI */}
                                 {activeApi === 'edraw' && (
-                                    <div className="absolute inset-0 blueprint-bg p-6 flex flex-col">
-                                        <div className="flex justify-center gap-4 mb-6 z-10">
+                                    <div className="absolute inset-0 blueprint-bg p-4 sm:p-6 flex flex-col">
+                                        <div className="flex flex-wrap justify-center gap-2 sm:gap-4 mb-4 z-10">
                                             {['electrical', 'plumbing', 'hvac'].map(layer => (
-                                                <label key={layer} className="flex items-center gap-2 text-xs font-mono text-white cursor-pointer bg-black/50 px-3 py-2 rounded border border-white/20">
+                                                <label key={layer} className="flex items-center gap-2 text-[10px] sm:text-xs font-mono text-white cursor-pointer bg-black/60 px-3 py-2 rounded border border-white/20 hover:border-white/40 transition select-none">
                                                     <input 
                                                         type="checkbox" 
                                                         checked={layers[layer]} 
                                                         onChange={() => setLayers({...layers, [layer]: !layers[layer]})}
-                                                        className="accent-opus-gold"
+                                                        className="accent-opus-gold w-3 h-3 sm:w-4 sm:h-4"
                                                     />
                                                     {layer.toUpperCase()}
                                                 </label>
                                             ))}
                                         </div>
-                                        <div className="flex-1 relative border-2 border-blue-400/30 rounded bg-blue-900/20 overflow-hidden flex items-center justify-center">
-                                            {/* Fake Blueprint Lines */}
+                                        
+                                        <div className="flex-1 relative border-2 border-blue-400/30 rounded bg-blue-900/20 overflow-hidden flex items-center justify-center shadow-inner">
+                                            {/* Fake Blueprint Structure */}
                                             <div className="absolute inset-4 border-2 border-white/20"></div>
-                                            <div className="absolute top-1/2 left-4 right-4 h-0.5 bg-white/20"></div>
-                                            <div className="absolute left-1/2 top-4 bottom-4 w-0.5 bg-white/20"></div>
+                                            <div className="absolute top-[30%] left-4 right-[40%] h-0.5 bg-white/20"></div>
+                                            <div className="absolute top-[30%] right-[40%] bottom-4 w-0.5 bg-white/20"></div>
+                                            <div className="absolute top-4 bottom-[40%] left-[30%] w-0.5 bg-white/20"></div>
+                                            <div className="absolute bottom-[40%] left-4 right-[70%] h-0.5 bg-white/20"></div>
                                             
                                             {layers.electrical && (
                                                 <svg className="absolute inset-0 w-full h-full animate-fade-in" style={{color: '#fbbf24'}}>
-                                                    <path d="M 100 100 L 200 100 L 200 200 L 300 200" stroke="currentColor" strokeWidth="2" fill="none" strokeDasharray="5,5"/>
-                                                    <circle cx="100" cy="100" r="4" fill="currentColor" />
-                                                    <circle cx="300" cy="200" r="4" fill="currentColor" />
+                                                    <path d="M 20% 20% L 50% 20% L 50% 80% L 80% 80%" stroke="currentColor" strokeWidth="2" fill="none" strokeDasharray="5,5"/>
+                                                    <circle cx="20%" cy="20%" r="4" fill="currentColor" />
+                                                    <circle cx="80%" cy="80%" r="4" fill="currentColor" />
+                                                    <path d="M 50% 50% L 80% 50%" stroke="currentColor" strokeWidth="2" fill="none" strokeDasharray="5,5"/>
+                                                    <circle cx="80%" cy="50%" r="4" fill="currentColor" />
                                                 </svg>
                                             )}
                                             {layers.plumbing && (
                                                 <svg className="absolute inset-0 w-full h-full animate-fade-in" style={{color: '#38bdf8'}}>
-                                                    <path d="M 50 150 L 150 150 L 150 250 L 250 250" stroke="currentColor" strokeWidth="2" fill="none"/>
-                                                    <rect x="46" y="146" width="8" height="8" fill="currentColor" />
-                                                    <rect x="246" y="246" width="8" height="8" fill="currentColor" />
+                                                    <path d="M 10% 40% L 40% 40% L 40% 90%" stroke="currentColor" strokeWidth="3" fill="none"/>
+                                                    <rect x="calc(10% - 4px)" y="calc(40% - 4px)" width="8" height="8" fill="currentColor" />
+                                                    <rect x="calc(40% - 4px)" y="calc(90% - 4px)" width="8" height="8" fill="currentColor" />
                                                 </svg>
                                             )}
                                             {layers.hvac && (
                                                 <svg className="absolute inset-0 w-full h-full animate-fade-in" style={{color: '#fb7185'}}>
-                                                    <path d="M 200 50 L 200 150 L 400 150" stroke="currentColor" strokeWidth="4" fill="none" opacity="0.5"/>
+                                                    <path d="M 15% 10% L 85% 10%" stroke="currentColor" strokeWidth="8" fill="none" opacity="0.6"/>
+                                                    <path d="M 85% 10% L 85% 30%" stroke="currentColor" strokeWidth="8" fill="none" opacity="0.6"/>
                                                 </svg>
                                             )}
-                                            <div className="absolute bottom-2 right-2 text-[10px] text-blue-300 font-mono">Powered by Edraw.AI API</div>
+                                            <div className="absolute bottom-2 right-2 text-[8px] sm:text-[10px] text-blue-300 font-mono bg-black/50 px-2 py-1 rounded">Edraw.AI Active</div>
                                         </div>
                                     </div>
                                 )}
 
                                 {/* VIEW 3: eDrawings 3D */}
                                 {activeApi === 'edrawings' && (
-                                    <div className="absolute inset-0 flex flex-col bg-gradient-to-b from-gray-900 to-black">
-                                        <div className="absolute top-4 left-4 z-10 text-xs font-mono text-opus-gold tracking-widest animate-pulse">
-                                            Interactive WebGL Render
+                                    <div className="absolute inset-0 flex flex-col bg-gradient-to-b from-gray-900 to-opus-dark">
+                                        <div className="absolute top-4 left-4 z-10 text-[10px] sm:text-xs font-mono text-opus-gold tracking-widest animate-pulse bg-black/50 px-2 py-1 rounded">
+                                            Interactive WebGL
                                         </div>
                                         <div className="absolute top-4 right-4 z-10 flex gap-2">
-                                            <div className="w-8 h-8 rounded bg-white/10 flex items-center justify-center border border-white/20"><i className="ph ph-arrows-out-cardinal text-white"></i></div>
-                                            <div className="w-8 h-8 rounded bg-white/10 flex items-center justify-center border border-white/20"><i className="ph ph-arrows-clockwise text-white"></i></div>
+                                            <div className="w-8 h-8 rounded bg-black/50 flex items-center justify-center border border-white/20"><i className="ph ph-arrows-out-cardinal text-white"></i></div>
+                                            <div className="w-8 h-8 rounded bg-black/50 flex items-center justify-center border border-white/20"><i className="ph ph-arrows-clockwise text-white"></i></div>
                                         </div>
+                                        
                                         {/* Three.js Container */}
                                         <div ref={mountRef} className="w-full h-full cursor-move"></div>
                                         
-                                        <div className="absolute bottom-4 right-4 bg-black/60 backdrop-blur px-3 py-1 rounded text-[10px] text-gray-400 font-mono border border-gray-700">
-                                            eDrawings Cloud API Connected
+                                        <div className="absolute bottom-4 right-4 bg-black/70 backdrop-blur px-3 py-1.5 rounded text-[9px] sm:text-[10px] text-gray-300 font-mono border border-gray-700">
+                                            eDrawings API Connected
                                         </div>
                                     </div>
                                 )}
@@ -385,32 +438,32 @@
             ];
 
             return (
-                <section id="villas" className="py-24 bg-opus-dark relative z-20">
-                    <div className="max-w-7xl mx-auto px-6">
-                        <div className="flex flex-col md:flex-row justify-between items-end mb-12 border-b border-white/10 pb-6">
+                <section id="portfolio" className="py-20 bg-opus-dark relative z-20">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 w-full">
+                        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 border-b border-white/10 pb-6 gap-4">
                             <div>
-                                <h2 className="font-serif text-3xl md:text-5xl text-white mb-2">Featured Developments</h2>
-                                <p className="text-opus-gold uppercase tracking-widest text-xs font-bold">Costa Rica Premium Locations</p>
+                                <h2 className="font-serif text-3xl md:text-4xl text-white mb-2">Featured Developments</h2>
+                                <p className="text-opus-gold uppercase tracking-widest text-[10px] sm:text-xs font-bold">Costa Rica Premium Locations</p>
                             </div>
-                            <button className="hidden md:flex items-center gap-2 text-sm text-gray-400 hover:text-white transition mt-4 md:mt-0">
-                                View All Properties <i className="ph ph-arrow-right"></i>
+                            <button className="text-sm text-gray-400 hover:text-white transition flex items-center gap-2">
+                                View All <i className="ph ph-arrow-right"></i>
                             </button>
                         </div>
 
-                        <div className="grid md:grid-cols-3 gap-8">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
                             {villas.map((villa, i) => (
-                                <div key={i} className="group cursor-pointer">
-                                    <div className="overflow-hidden rounded-sm relative aspect-[4/5] mb-4">
+                                <div key={i} className="group cursor-pointer flex flex-col h-full">
+                                    <div className="overflow-hidden rounded-xl relative aspect-[4/3] sm:aspect-[4/5] mb-4">
                                         <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition z-10 duration-500"></div>
-                                        <img src={villa.img} alt={villa.name} className="w-full h-full object-cover transform group-hover:scale-110 transition duration-700" />
-                                        <div className="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black to-transparent z-20">
-                                            <h3 className="font-serif text-2xl text-white mb-1">{villa.name}</h3>
-                                            <p className="text-xs text-gray-300 uppercase tracking-widest"><i className="ph-fill ph-map-pin text-opus-gold"></i> {villa.location}</p>
+                                        <img src={villa.img} alt={villa.name} className="w-full h-full object-cover transform group-hover:scale-110 transition duration-700" loading="lazy"/>
+                                        <div className="absolute bottom-0 left-0 w-full p-4 sm:p-6 bg-gradient-to-t from-black via-black/80 to-transparent z-20">
+                                            <h3 className="font-serif text-xl sm:text-2xl text-white mb-1 drop-shadow-md">{villa.name}</h3>
+                                            <p className="text-[10px] sm:text-xs text-gray-300 uppercase tracking-widest flex items-center gap-1"><i className="ph-fill ph-map-pin text-opus-gold"></i> {villa.location}</p>
                                         </div>
                                     </div>
-                                    <div className="flex justify-between items-center px-1">
+                                    <div className="flex justify-between items-center px-1 mt-auto">
                                         <span className="text-sm font-bold text-opus-gold">{villa.price}</span>
-                                        <span className="text-xs text-gray-500 uppercase tracking-widest group-hover:text-white transition">Customize <i className="ph-bold ph-arrow-right"></i></span>
+                                        <span className="text-xs text-gray-500 uppercase tracking-widest group-hover:text-white transition flex items-center gap-1">Customize <i className="ph-bold ph-arrow-right"></i></span>
                                     </div>
                                 </div>
                             ))}
@@ -424,59 +477,83 @@
         // MAIN APP ASSEMBLE
         // ==========================================
         const App = () => {
+            const [scrolled, setScrolled] = useState(false);
+            const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+            useEffect(() => {
+                const handleScroll = () => setScrolled(window.scrollY > 50);
+                window.addEventListener('scroll', handleScroll);
+                return () => window.removeEventListener('scroll', handleScroll);
+            }, []);
+
             const scrollToStudio = () => {
                 const studio = document.getElementById('ai-studio');
                 if(studio) studio.scrollIntoView({ behavior: 'smooth' });
+                setMobileMenuOpen(false);
             };
 
             return (
                 <div className="flex flex-col min-h-screen font-sans">
                     
                     {/* TOP NAVIGATION */}
-                    <nav className="fixed w-full z-50 bg-opus-dark/90 backdrop-blur-md border-b border-white/5 transition-all">
-                        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+                    <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-opus-dark/95 backdrop-blur-md border-b border-white/10 shadow-lg py-3' : 'bg-transparent py-5'}`}>
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between">
                             <a href="#" className="flex items-center gap-3">
-                                <div className="w-10 h-10 border border-opus-gold flex items-center justify-center rounded-sm">
+                                <div className="w-10 h-10 border border-opus-gold flex items-center justify-center rounded-lg shadow-[0_0_15px_rgba(212,175,55,0.2)]">
                                     <i className="ph-thin ph-buildings text-2xl text-opus-gold"></i>
                                 </div>
                                 <div className="flex flex-col">
-                                    <span className="font-serif font-bold text-xl tracking-widest text-white leading-none">OPUS</span>
-                                    <span className="text-[9px] text-gray-400 uppercase tracking-[0.3em]">Estates Costa Rica</span>
+                                    <span className="font-serif font-bold text-lg sm:text-xl tracking-widest text-white leading-none">OPUS</span>
+                                    <span className="text-[8px] sm:text-[9px] text-gray-400 uppercase tracking-[0.3em]">Estates Costa Rica</span>
                                 </div>
                             </a>
 
+                            {/* Desktop Menu */}
                             <div className="hidden md:flex gap-8 text-xs font-bold uppercase tracking-[0.15em] text-gray-300">
                                 <a href="#" className="hover:text-opus-gold transition">Home</a>
-                                <a href="#ai-studio" className="hover:text-opus-gold transition">Quantum AI Studio</a>
-                                <a href="#villas" className="hover:text-opus-gold transition">Properties</a>
+                                <button onClick={scrollToStudio} className="hover:text-opus-gold transition">AI Studio</button>
+                                <a href="#portfolio" className="hover:text-opus-gold transition">Properties</a>
                             </div>
 
-                            <a href="mailto:contact@opusestates.cr" className="hidden md:block px-6 py-2 border border-opus-gold text-opus-gold text-xs font-bold uppercase tracking-widest hover:bg-opus-gold hover:text-black transition duration-300">
+                            <a href="#" className="hidden md:block px-6 py-2.5 bg-white/10 border border-opus-gold/50 text-opus-gold text-xs font-bold uppercase tracking-widest hover:bg-opus-gold hover:text-black transition duration-300 rounded">
                                 Client Portal
                             </a>
                             
-                            <button className="md:hidden text-white text-2xl"><i className="ph ph-list"></i></button>
+                            {/* Mobile Hamburger */}
+                            <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden text-white text-2xl p-2">
+                                <i className={`ph ${mobileMenuOpen ? 'ph-x' : 'ph-list'}`}></i>
+                            </button>
                         </div>
+
+                        {/* Mobile Menu Dropdown */}
+                        {mobileMenuOpen && (
+                            <div className="md:hidden absolute top-full left-0 w-full bg-opus-dark border-b border-white/10 flex flex-col p-4 shadow-xl animate-fade-in">
+                                <a href="#" onClick={() => setMobileMenuOpen(false)} className="p-4 text-center text-sm font-bold uppercase tracking-widest text-gray-300 hover:text-opus-gold border-b border-white/5">Home</a>
+                                <button onClick={scrollToStudio} className="p-4 text-center text-sm font-bold uppercase tracking-widest text-gray-300 hover:text-opus-gold border-b border-white/5">Quantum AI Studio</button>
+                                <a href="#portfolio" onClick={() => setMobileMenuOpen(false)} className="p-4 text-center text-sm font-bold uppercase tracking-widest text-gray-300 hover:text-opus-gold border-b border-white/5">Properties</a>
+                                <a href="#" className="p-4 mt-2 text-center text-sm font-bold uppercase tracking-widest text-opus-dark bg-opus-gold rounded mx-4">Client Portal</a>
+                            </div>
+                        )}
                     </nav>
 
-                    <main className="flex-1">
+                    <main className="flex-1 w-full overflow-x-hidden">
                         <HeroSection onOpenStudio={scrollToStudio} />
                         <AIStudio />
                         <Portfolio />
                     </main>
 
                     {/* FOOTER */}
-                    <footer className="bg-black py-12 border-t border-white/10 relative z-20">
-                        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
-                            <div className="flex items-center gap-3 opacity-50">
+                    <footer className="bg-black py-10 border-t border-white/10 relative z-20">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row justify-between items-center gap-6 text-center md:text-left">
+                            <div className="flex items-center justify-center gap-3 opacity-50">
                                 <i className="ph-thin ph-buildings text-2xl text-white"></i>
                                 <span className="font-serif text-lg tracking-widest text-white">OPUS ESTATES</span>
                             </div>
-                            <p className="text-xs text-gray-600 font-mono text-center md:text-left">
-                                DESIGNED BY QUANTUM MAXIMUS & APOLLO SOL INVICTUS.<br/>
+                            <p className="text-[10px] sm:text-xs text-gray-600 font-mono">
+                                DESIGNED BY QUANTUM MAXIMUS.<br className="hidden sm:block"/>
                                 API INTEGRATIONS: EDRAWINGS | EDRAW.AI | MYARCHITECTAI
                             </p>
-                            <div className="flex gap-4 text-gray-500">
+                            <div className="flex justify-center gap-4 text-gray-500">
                                 <i className="ph-fill ph-instagram-logo text-xl hover:text-white cursor-pointer transition"></i>
                                 <i className="ph-fill ph-linkedin-logo text-xl hover:text-white cursor-pointer transition"></i>
                             </div>
